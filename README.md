@@ -8,15 +8,13 @@ I developed this prototype to explore a research question:
 
 **Can a neural network learn meaningful relationships between traffic situations to retrieve relevant past events and support hazard prediction?**
 
-The scenario involves a driver in an ego car encountering a cyclist. I investigate how neural networks can learn representations of traffic situations and use them to retrieve similar historical events.
-
-The project compares traditional feature-based retrieval, neural embedding-based retrieval, and direct neural network prediction.
+The scenario involves a driver in an ego car encountering a cyclist. I investigate how neural networks can learn representations of traffic situations and use them to retrieve similar historical events. The project compares traditional feature-based retrieval, neural embedding-based retrieval, and direct neural network prediction.
 
 ## Methodology
 
 ### 1. Synthetic Traffic Data
 
-I generated 1,600 synthetic car–cyclist traffic scenarios using five features:
+I generated 1600 synthetic car–cyclist traffic scenarios using five features:
 
 - **Car Speed:** Speed of the ego vehicle.
 - **Bicycle Distance:** Distance between the car and cyclist.
@@ -26,7 +24,7 @@ I generated 1,600 synthetic car–cyclist traffic scenarios using five features:
 
 Each scenario has a binary label: **Safe (0)** or **Hazard (1)**, generated using simplified risk rules.
 
-The dataset is divided into 1,200 training samples and 400 test samples.
+The dataset is divided into 1200 training samples and 400 test samples.
 
 ### 2. Neural Representation Learning
 
@@ -66,11 +64,7 @@ I compared four approaches using Accuracy and F1 Score:
 
 ## Findings
 
-In this experiment, the neural embedding-based retrieval approach did not outperform traditional KNN.
-
-This suggests that learning a representation does not automatically improve retrieval performance. The effectiveness of learned embeddings depends on the training objective, the data, and how similarity is defined.
-
-The experiment helped me explore how neural networks can learn relationships between historical events and how different retrieval approaches can be evaluated quantitatively.
+In this experiment, the neural embedding-based retrieval approach did not outperform traditional KNN. This suggests that learning a representation does not automatically improve retrieval performance. The effectiveness of learned embeddings depends on the training objective, the data, and how similarity is defined. The experiment helped me explore how neural networks can learn relationships between historical events and how different retrieval approaches can be evaluated quantitatively.
 
 ## Technologies
 
@@ -84,11 +78,7 @@ The notebook includes data generation, neural network training, contrastive repr
 
 ## Limitations and Future Work
 
-This is a simplified research prototype using synthetic data, rather than a validated real-world traffic accident prediction system.
-
-The current implementation uses static traffic scenarios rather than continuous vehicle and cyclist trajectories. The learned similarity is based on synthetic outcome labels and does not establish causal relationships between events.
-
-Additionally, neural retrieval and direct prediction are evaluated separately rather than integrated into a complete memory-augmented prediction model.
+This is a simplified research prototype using synthetic data, rather than a validated real-world traffic accident prediction system. The current implementation uses static traffic scenarios rather than continuous vehicle and cyclist trajectories. The learned similarity is based on synthetic outcome labels and does not establish causal relationships between events. Additionally, neural retrieval and direct prediction are evaluated separately rather than integrated into a complete memory-augmented prediction model.
 
 Possible future extensions include:
 
