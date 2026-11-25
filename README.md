@@ -21,9 +21,7 @@ Four methods are evaluated:
 - KNN using learned neural embeddings
 - Direct classification using an MLP
 
-The neural encoder maps each scenario to an 8-dimensional embedding. Contrastive learning is used to reduce the distance between samples with matching labels and increase the separation between samples with different labels.
-
-Both retrieval methods use seven nearest neighbours.
+The neural encoder maps each scenario to an 8-dimensional embedding. Contrastive learning is used to reduce the distance between samples with matching labels and increase the separation between samples with different labels. Both retrieval methods use seven nearest neighbours.
 
 ## Results
 
