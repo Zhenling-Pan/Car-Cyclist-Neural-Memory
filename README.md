@@ -1,92 +1,61 @@
-# Car–Cyclist Traffic Hazard Prediction with Neural Memory Retrieval
+# Car–Cyclist Hazard Prediction with Neural Memory Retrieval
 
-**Independent PyTorch Research Prototype | Contrastive Learning | Memory Retrieval | Traffic Hazard Prediction**
+This project investigates whether learned neural embeddings improve the retrieval of similar traffic scenarios compared with conventional feature-based retrieval. The experiment uses simulated encounters between a car and a cyclist, with PyTorch for representation learning and classification.
 
-## Overview
+## Experimental setup
 
-I developed this prototype to explore a research question:
+The dataset consists of 1,600 synthetic traffic scenarios described by five features:
 
-**Can a neural network learn meaningful relationships between traffic situations to retrieve relevant past events and support hazard prediction?**
+- Vehicle speed
+- Distance to the cyclist
+- Cyclist crossing status
+- Reduced visibility
+- Driver distraction
 
-The scenario involves a driver in an ego car encountering a cyclist. I investigate how neural networks can learn representations of traffic situations and use them to retrieve similar historical events. The project compares traditional feature-based retrieval, neural embedding-based retrieval, and direct neural network prediction.
+Binary hazard labels are generated using simplified risk rules. The dataset is split into 1,200 training samples and 400 test samples.
 
-## Methodology
+Four methods are evaluated:
 
-### 1. Synthetic Traffic Data
+- Majority-class baseline
+- KNN using standardized input features
+- KNN using learned neural embeddings
+- Direct classification using an MLP
 
-I generated 1600 synthetic car–cyclist traffic scenarios using five features:
+The neural encoder maps each scenario to an 8-dimensional embedding. Contrastive learning is used to reduce the distance between samples with matching labels and increase the separation between samples with different labels.
 
-- **Car Speed:** Speed of the ego vehicle.
-- **Bicycle Distance:** Distance between the car and cyclist.
-- **Cyclist Crossing:** Whether the cyclist crosses the vehicle's path.
-- **Visibility:** Whether visibility is reduced.
-- **Driver Distraction:** Whether the driver is distracted.
+Both retrieval methods use seven nearest neighbours.
 
-Each scenario has a binary label: **Safe (0)** or **Hazard (1)**, generated using simplified risk rules.
+## Results
 
-The dataset is divided into 1200 training samples and 400 test samples.
-
-### 2. Neural Representation Learning
-
-I implemented a neural encoder using PyTorch to transform traffic situations into 8-dimensional embeddings.
-
-The encoder is trained using **Contrastive Learning**, where:
-
-- Situations with the same outcome label are encouraged to have similar embeddings.
-- Situations with different outcome labels are encouraged to have more distant embeddings.
-
-This allows the model to learn a representation of traffic situations instead of relying entirely on predefined feature distances.
-
-### 3. Memory Retrieval
-
-I implemented two approaches to retrieve similar historical traffic events:
-
-**Raw-feature KNN:** Retrieves similar situations based on standardized original features.
-
-**Neural-embedding KNN:** Retrieves similar situations using the learned embeddings produced by the neural encoder.
-
-Both methods retrieve the seven nearest historical events and estimate the hazard probability from their labels.
-
-### 4. Prediction and Evaluation
-
-I also trained a separate PyTorch multilayer perceptron (MLP) for direct hazard prediction.
-
-I compared four approaches using Accuracy and F1 Score:
-
-| Method | Accuracy | F1 Score |
+| Method | Accuracy | F1 score |
 |---|---:|---:|
-| Majority-class Baseline | 59.5% | 0.000 |
+| Majority-class baseline | 59.5% | 0.000 |
 | Raw-feature KNN | 79.0% | 0.747 |
 | Neural-embedding KNN | 78.2% | 0.737 |
-| Direct PyTorch MLP | 81.0% | 0.768 |
+| Direct MLP | 81.0% | 0.768 |
 
-*Results from one experimental run on 400 held-out synthetic traffic scenarios.*
+Results are based on a single experimental run with 400 held-out samples. The learned embeddings did not improve KNN performance in this experiment. Direct classification achieved the highest accuracy and F1 score. One possible explanation is that the original features already capture much of the information used to generate the hazard labels. A different training objective or a more complex dataset may produce different results.
 
-## Findings
+## Running the notebook
 
-In this experiment, the neural embedding-based retrieval approach did not outperform traditional KNN. This suggests that learning a representation does not automatically improve retrieval performance. The effectiveness of learned embeddings depends on the training objective, the data, and how similarity is defined. The experiment helped me explore how neural networks can learn relationships between historical events and how different retrieval approaches can be evaluated quantitatively.
+The full experiment is available in [Car_Cyclist_Neural_Memory_Research.ipynb](Car_Cyclist_Neural_Memory_Research.ipynb).
 
-## Technologies
+Dependencies:
 
-Python · PyTorch · NumPy · Scikit-learn · Pandas · Matplotlib
+- PyTorch
+- NumPy
+- scikit-learn
+- pandas
+- Matplotlib
 
-## Notebook
+Open the notebook in Jupyter or Google Colab and run the cells in order. The dataset is generated within the notebook.
 
-[Car_Cyclist_Neural_Memory_Research.ipynb](Car_Cyclist_Neural_Memory_Research.ipynb)
+## Limitations
 
-The notebook includes data generation, neural network training, contrastive representation learning, memory retrieval, model evaluation, and visualizations.
+The experiment uses static, synthetic traffic scenarios rather than recorded vehicle and cyclist trajectories. The results therefore do not establish real-world accident prediction performance.
 
-## Limitations and Future Work
-
-This is a simplified research prototype using synthetic data, rather than a validated real-world traffic accident prediction system. The current implementation uses static traffic scenarios rather than continuous vehicle and cyclist trajectories. The learned similarity is based on synthetic outcome labels and does not establish causal relationships between events. Additionally, neural retrieval and direct prediction are evaluated separately rather than integrated into a complete memory-augmented prediction model.
-
-Possible future extensions include:
-
-- Incorporating temporal trajectories and behavioral information.
-- Exploring more advanced methods for learning relationships between traffic events.
-- Integrating retrieved memories into neural prediction models.
-- Evaluating prediction performance using realistic traffic simulation data.
+The retrieval and classification models are evaluated separately. A natural next step is to incorporate retrieved embeddings into the prediction model and test whether they provide additional information.
 
 ---
 
-*This is an independent personal project developed for exploring neural representation learning and memory-based traffic prediction. It is not affiliated with or endorsed by Ericsson.*
+Independent personal project. Not affiliated with Ericsson.
