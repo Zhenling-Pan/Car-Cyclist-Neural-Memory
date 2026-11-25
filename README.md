@@ -52,9 +52,7 @@ Open the notebook in Jupyter or Google Colab and run the cells in order. The dat
 
 ## Limitations
 
-The experiment uses static, synthetic traffic scenarios rather than recorded vehicle and cyclist trajectories. The results therefore do not establish real-world accident prediction performance.
-
-The retrieval and classification models are evaluated separately. A natural next step is to incorporate retrieved embeddings into the prediction model and test whether they provide additional information.
+The experiment uses static, synthetic traffic scenarios rather than recorded vehicle and cyclist trajectories. The results therefore do not establish real-world accident prediction performance. The retrieval and classification models are evaluated separately. A natural next step is to incorporate retrieved embeddings into the prediction model and test whether they provide additional information.
 
 ---
 
